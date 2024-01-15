@@ -1,0 +1,33 @@
+p.name {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+
+}
+
+p.msg {
+    font-size: 15px;
+    font-weight: bold;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+    width: 200px;
+
+    height: 20px;
+}
+
+p.time {
+    font-weight: bold;
+    color: #28b152;
+}
+
+.unread_message {
+
+    --background: #28b152;
+
+
+}

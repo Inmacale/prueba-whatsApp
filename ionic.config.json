@@ -1,0 +1,7 @@
+{
+  "name": "prueba-whatsapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

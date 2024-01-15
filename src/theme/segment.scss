@@ -1,0 +1,10 @@
+ion-segment {
+    border-radius: 0;
+    --background: var(--ion-color-success);
+
+    ion-segment-button {
+        --color: #87c5be;
+        --color-checked: #fff;
+        --indicator-height: 3px;
+    }
+}

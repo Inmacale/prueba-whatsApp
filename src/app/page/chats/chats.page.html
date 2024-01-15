@@ -1,0 +1,18 @@
+<ion-list lines="none">
+  <ion-item *ngFor="let chat of chats" [routerLink]="['/chat-contact/'+chat.id]" detail="false">
+    <ion-avatar slot="start">
+      <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+    <ion-badge *ngIf="getUnreadMessages(chat.unreadMessages) !== 0" class="unread_message" slot="end">
+      {{getUnreadMessages(chat.unreadMessages)}}</ion-badge>
+    <ion-note slot="end" class="time">{{getLastMessage(chat.messages)?.date| date: 'HH:mm'}}</ion-note>
+    <ion-label class="ion-text-wrap">
+      <p class="name"> {{chat.contact.name}}</p>
+      <p class="msg">{{getLastMessage(chat.messages)?.content}}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
