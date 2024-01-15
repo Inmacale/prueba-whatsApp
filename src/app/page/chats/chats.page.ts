@@ -21,25 +21,11 @@ export class ChatsPage implements OnInit {
   }
 
   getChats(): void {
-    this.chats = this.chatsService.getChats();
+    this.chatsService.getChats().subscribe(chats => this.chats = chats);
     this.totalChat = this.chats.length;
   }
 
-  onIonInfinite(event: any): void {
-    setTimeout(() => {
-      const startIndex = this.chats.length;
-      const endIndex = startIndex + this.chatPage;
-      const newChat = this.chatsService.getChats().slice(startIndex, endIndex);
 
-      this.chats = [...this.chats, ...newChat];
-
-      event.target.complete();
-
-      if (this.chats.length >= this.totalChat) {
-        event.target.disabled = true;
-      }
-    }, 2000);
-  }
 
   getLastMessage(messages: Message[]): Message | null {
     return this.chatsService.getLastMessage(messages);

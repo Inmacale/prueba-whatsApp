@@ -1,38 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Chat } from '../model/chat';
 import { Message } from '../model/message';
-import { ContactService } from './contact.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatsService {
 
-  chats: Chat[] = [];
+  private chatsUrl = 'api/chats';
 
-  constructor(private contactService: ContactService) {
-    this.initializeChats();
+  constructor(private http: HttpClient) {
+    
   }
 
-  private initializeChats(): void {
-    this.chats = [];
-    this.contactService.getContacts().forEach(element => {
-      const newId = this.chats.length + 1;
-      this.chats?.push(
-        {
-          id: newId,
-          contact: element,
-          messages: [],
-          unreadMessages: []
-        }
-      )
-    })
+  public getChats(): Observable<Chat[]> {
+    return this.http.get<Chat[]>(this.chatsUrl);
   }
 
 
-  public getChats(): Chat[] {
-    return this.chats;
-  }
+
 
   public getLastMessage(messages: Message[]): Message | null {
     if (messages && messages.length > 0) {
@@ -50,7 +39,8 @@ export class ChatsService {
     return 0;
   }
 
-  public getChatById(chatId: number): Chat | undefined {
-    return this.chats.find(chat => chat.id === chatId);
+  public getChatById(id: number): Observable<Chat> {
+    const url = `${this.chatsUrl}/${id}`;
+    return this.http.get<Chat>(url);
   }
 }

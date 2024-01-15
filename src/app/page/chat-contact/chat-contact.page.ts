@@ -23,7 +23,7 @@ export class ChatContactPage implements OnInit {
     const chatId = this.route.snapshot.paramMap.get('id');
     if (chatId) {
       const parsedChatId = Number(chatId);
-      this.chat = this.chatsService.getChatById(parsedChatId);
+      this.chatsService.getChatById(parsedChatId).subscribe(chat => this.chat= chat);
     }
   }
 

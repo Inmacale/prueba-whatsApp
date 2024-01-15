@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Contact } from '../model/contact';
+import { Chat } from '../model/chat';
 
 
 
@@ -44,10 +45,24 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 32, name: 'cristina', number: 123456789 },
       { id: 33, name: 'isabel', number: 123456789 },
     ];
-    return { contacts };
+
+
+    const chats: Chat[]=[];
+    contacts.forEach(element => {
+      const newId = chats.length + 1;
+      chats?.push(
+        {
+          id: newId,
+          contact: element,
+          messages: [],
+          unreadMessages: []
+        }
+      )
+    })
+    return { chats };
   }
 
-  genId(contacts: Contact[]): number {
-    return contacts.length > 0 ? Math.max(...contacts.map(contact => contact.id)) + 1 : 11;
+  genId(chats: Chat[]): number {
+    return chats.length > 0 ? Math.max(...chats.map(chat => chat.id)) + 1 : 11;
   }
 }
