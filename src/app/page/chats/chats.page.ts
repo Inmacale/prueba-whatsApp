@@ -21,7 +21,7 @@ export class ChatsPage implements OnInit {
     this.getChats();
   }
 
-  public getChats(): void {
+  async getChats() {
     this.chats = this.chatsDataManagement.getFindAll();
 
     this.totalChat = this.chats.length;
