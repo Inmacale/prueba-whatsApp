@@ -1,0 +1,24 @@
+import { Injectable } from '@angular/core';
+import { AbstractService } from './abstract.service';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RestService extends AbstractService {
+
+  apiUrl = 'api/chats';
+
+  constructor(protected httpClient: HttpClient) {
+    super(httpClient);
+  }
+
+  public getId(id: number) {
+    return this.get(this.apiUrl + id);
+  }
+
+  public getAll(params?: any) {
+    return this.get(this.apiUrl, params);
+  }
+
+}

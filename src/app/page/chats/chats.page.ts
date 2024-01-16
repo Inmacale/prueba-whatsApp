@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 import { ChatsService } from 'src/app/service/chats.service';
+import { DataManagementService } from 'src/app/service/data-management.service';
 
 @Component({
   selector: 'app-chats',
@@ -14,14 +15,15 @@ export class ChatsPage implements OnInit {
   totalChat: number = 0;
   chatPage: number = 5;
 
-  constructor(private chatsService: ChatsService) { }
+  constructor(private chatsService: ChatsService, protected chatsDataManagement: DataManagementService) { }
 
   ngOnInit() {
     this.getChats();
   }
 
-  getChats(): void {
-    this.chatsService.getChats().subscribe(chats => this.chats = chats);
+  public getChats(): void {
+    this.chats = this.chatsDataManagement.getFindAll();
+
     this.totalChat = this.chats.length;
   }
 

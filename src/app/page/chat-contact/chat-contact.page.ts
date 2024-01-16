@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chat } from 'src/app/model/chat';
+import { Message } from 'src/app/model/message';
 import { ChatsService } from 'src/app/service/chats.service';
+import { DataManagementService } from 'src/app/service/data-management.service';
 
 @Component({
   selector: 'app-chat-contact',
@@ -13,29 +15,54 @@ export class ChatContactPage implements OnInit {
   chat: Chat | undefined;
   newMessage: string = '';
 
-  constructor(private route: ActivatedRoute, private chatsService: ChatsService) { }
+  profileId: number | undefined;
+
+  constructor(private route: ActivatedRoute, private chatsService: ChatsService, private chatContactDataManagement: DataManagementService) { }
 
   ngOnInit() {
-    this.selectedChat();
+    this.profileId = parseInt(this.route.snapshot.paramMap.get('id') || '', 10);
+    this.getChatContact();
   }
 
-  private selectedChat(): void {
-    const chatId = this.route.snapshot.paramMap.get('id');
-    if (chatId) {
-      const parsedChatId = Number(chatId);
-      this.chatsService.getChatById(parsedChatId).subscribe(chat => this.chat= chat);
+  async getChatContact() {
+    if (this.profileId) {
+      this.chatContactDataManagement.getFindId(this.profileId).then(res => {
+        this.chat = res;
+      });
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       if (this.chat) {
-        const newMessage = {
+        const newMessage: Message = {
           id: this.chat.messages.length + 1,
           content: this.newMessage,
           type: 'output',
           date: new Date(),
         };
+
+        const newMessage2 = new Message(
+          this.chat.messages.length + 1,
+          this.newMessage,
+          'output',
+          new Date()
+        );
 
         this.chat.messages.push(newMessage);
         this.newMessage = '';

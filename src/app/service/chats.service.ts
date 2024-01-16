@@ -10,15 +10,13 @@ import { Observable } from 'rxjs';
 })
 export class ChatsService {
 
-  private chatsUrl = 'api/chats';
+
 
   constructor(private http: HttpClient) {
-    
+
   }
 
-  public getChats(): Observable<Chat[]> {
-    return this.http.get<Chat[]>(this.chatsUrl);
-  }
+
 
 
 
@@ -39,8 +37,5 @@ export class ChatsService {
     return 0;
   }
 
-  public getChatById(id: number): Observable<Chat> {
-    const url = `${this.chatsUrl}/${id}`;
-    return this.http.get<Chat>(url);
-  }
+
 }
