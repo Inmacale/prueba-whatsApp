@@ -14,7 +14,7 @@ export class RestService extends AbstractService {
   }
 
   public getId(id: number) {
-    return this.get(this.apiUrl + id);
+    return this.get(this.apiUrl, id);
   }
 
   public getAll(params?: any) {

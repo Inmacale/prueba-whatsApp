@@ -10,7 +10,7 @@ export class DataManagementService {
 
   constructor(protected rest: RestService) { }
 
-  public getFindId(id: number): Promise<any> {
+  getFindId(id: number): Promise<any> {
 
     return lastValueFrom(this.rest.getId(id))
       .then((res: any) => {

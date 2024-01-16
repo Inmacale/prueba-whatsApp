@@ -26,13 +26,10 @@ export class ChatContactPage implements OnInit {
 
   async getChatContact() {
     if (this.profileId) {
-      try {
-        const res = await this.chatContactDataManagement.getFindId(this.profileId);
+      this.chatContactDataManagement.getFindId(this.profileId).then(res => {
+        console.log('res es= ', res);
         this.chat = res;
-        console.log('Valor de this.chat:', this.chat);
-      } catch (error) {
-        console.error('Error obteniendo el chat:', error);
-      }
+      });
     }
   }
 
