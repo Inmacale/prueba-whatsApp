@@ -26,38 +26,20 @@ export class ChatContactPage implements OnInit {
 
   async getChatContact() {
     if (this.profileId) {
-      this.chatContactDataManagement.getFindId(this.profileId).then(res => {
+      try {
+        const res = await this.chatContactDataManagement.getFindId(this.profileId);
         this.chat = res;
-      });
+        console.log('Valor de this.chat:', this.chat);
+      } catch (error) {
+        console.error('Error obteniendo el chat:', error);
+      }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       if (this.chat) {
-        const newMessage: Message = {
-          id: this.chat.messages.length + 1,
-          content: this.newMessage,
-          type: 'output',
-          date: new Date(),
-        };
-
-        const newMessage2 = new Message(
+        const newMessage = new Message(
           this.chat.messages.length + 1,
           this.newMessage,
           'output',
@@ -66,8 +48,11 @@ export class ChatContactPage implements OnInit {
 
         this.chat.messages.push(newMessage);
         this.newMessage = '';
+        this.chatContactDataManagement.updateChats(this.chat);
       }
     }
+
+
   }
 
 

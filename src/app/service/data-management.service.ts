@@ -35,4 +35,17 @@ export class DataManagementService {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
       });
   }
+
+  public updateChats(chat: Chat): Promise<Chat> {
+    return lastValueFrom(this.rest.update(chat))
+      .then((res: any) => {
+        console.log(res);
+        return res; // Puedes devolver el resultado si es necesario
+      })
+      .catch(error => {
+        console.error(error);
+        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
+      });
+  }
+
 }

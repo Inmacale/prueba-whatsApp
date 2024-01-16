@@ -12,8 +12,7 @@ import { DataManagementService } from 'src/app/service/data-management.service';
 export class ChatsPage implements OnInit {
 
   chats: Chat[] = [];
-  totalChat: number = 0;
-  chatPage: number = 5;
+
 
   constructor(private chatsService: ChatsService, protected chatsDataManagement: DataManagementService) { }
 
@@ -22,9 +21,9 @@ export class ChatsPage implements OnInit {
   }
 
   async getChats() {
-    this.chats = this.chatsDataManagement.getFindAll();
+    this.chats = await this.chatsDataManagement.getFindAll();
 
-    this.totalChat = this.chats.length;
+
   }
 
 
