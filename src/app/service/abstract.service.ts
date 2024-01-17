@@ -19,9 +19,9 @@ export abstract class AbstractService {
     return this.http.post<T>(path, body);
   }
 
-  protected put<T>(path: string, body: any): Observable<T> {
+  protected put<T>(path: string, body: any, headers: any): Observable<any> {
 
-    return this.http.put<T>(path, body);
+    return this.http.put<T>(path, body, headers);
   }
 
   protected delete<T>(path: string): Observable<T> {

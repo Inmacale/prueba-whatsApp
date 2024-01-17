@@ -10,45 +10,40 @@ import { Message } from '../model/message';
 export class DataManagementService {
 
   constructor(protected rest: RestService) {
-    this.getFindAll();
+    
   }
 
 
-  getFindId(id: number): Observable<Chat> {
-    return from(this.rest.getId(id)).pipe(
-      map((res: any) => res),
-      catchError(error => {
-        console.error(error);
-        throw error;
-      })
-    );
-  }
+  getFindId(id: number): Promise<Chat> {
+    return lastValueFrom(this.rest.getId(id)).then((res: any) => {
+      return res; 
+    })
+    .catch(error => {
+      console.error(error);
+      throw error; 
+    });
+}
 
+  public getFindAll(): Promise<Chat[]> {
+    return lastValueFrom(this.rest.getAll()).then((res: any) => {
+      return res; 
+    })
+    .catch(error => {
+      console.error(error);
+      throw error; 
+    });
+}
 
-  public getFindAll(): Observable<Chat[]> {
-    return (this.rest.getAll()).pipe(
-      map((res: any) => res as Chat[]),
-      catchError(error => {
-        console.error(error);
-        throw error;
-      })
-    );
-  }
-
-  public updateChats(chat: Chat): Observable<Chat> {
-    return (this.rest.update(chat)).pipe(
-      map((res: any) => {
-        console.log('Respuesta de updateChats', res, chat);
-        return res;
-      }),
-      catchError(error => {
-        console.error('Error en updateChats', error);
-        throw error;
-      })
-    );
-  }
-
-
+  public updateChats(chat: Chat): Promise<Chat> {
+    return lastValueFrom(this.rest.update(chat)).then((res: any) => {
+      console.log('este es el resultado de update',res);
+      return res; 
+    })
+    .catch(error => {
+      console.error(error);
+      throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
+    });
+}
 
   public getLastMessage(messages: Message[]): Message | null {
     if (messages && messages.length > 0) {

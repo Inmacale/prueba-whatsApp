@@ -20,14 +20,12 @@ export class ChatsPage implements OnInit {
     this.getChats();
   }
 
-  getChats() {
-    this.chatsDataManagement.getFindAll().subscribe(chats => {
+ async getChats() {
+   await this.chatsDataManagement.getFindAll().then(chats => {
       this.chats = chats;
-      console.log('estos chats', this.chats);
     });
 
   }
-
 
 
   getLastMessage(messages: Message[]): Message | null {

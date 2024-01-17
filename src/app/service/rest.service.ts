@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractService } from './abstract.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class RestService extends AbstractService {
 
   apiUrl = 'api/chats';
+
+  headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(protected httpClient: HttpClient) {
     super(httpClient);
@@ -22,7 +24,7 @@ export class RestService extends AbstractService {
   }
 
   public update(body: any) {
-    return this.put(this.apiUrl, body);
+    return this.put(this.apiUrl + '/' + body.id, body, this.headers);
 
   }
 

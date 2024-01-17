@@ -24,15 +24,13 @@ export class ChatContactPage implements OnInit {
     this.getChatContact();
   }
 
-  getChatContact() {
+  async getChatContact() {
     if (this.profileId) {
-      this.chatContactDataManagement.getFindId(this.profileId).subscribe(res =>
+      this.chatContactDataManagement.getFindId(this.profileId).then (res =>
         this.chat = res);
-
 
     }
   }
-
 
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
@@ -46,7 +44,7 @@ export class ChatContactPage implements OnInit {
 
         this.chat.messages.push(newMessage);
         this.newMessage = '';
-        this.chatContactDataManagement.updateChats(this.chat).subscribe(updateChat => this.chat = updateChat);
+        this.chatContactDataManagement.updateChats(this.chat);
 
         console.log('envia ', this.chat);
       }
