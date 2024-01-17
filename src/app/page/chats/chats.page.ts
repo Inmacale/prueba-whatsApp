@@ -20,8 +20,8 @@ export class ChatsPage implements OnInit {
     this.getChats();
   }
 
-  async getChats() {
-    this.chats = await this.chatsDataManagement.getFindAll();
+  getChats() {
+    this.chatsDataManagement.getFindAll().subscribe(chats => this.chats = chats);
   }
 
 

@@ -23,6 +23,7 @@ export class RestService extends AbstractService {
 
   public update(body: any) {
     return this.put(this.apiUrl, body);
+
   }
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
-import { lastValueFrom } from 'rxjs';
+import { Observable, catchError, from, lastValueFrom, map } from 'rxjs';
 import { Chat } from '../model/chat';
 import { Message } from '../model/message';
 
@@ -9,44 +9,43 @@ import { Message } from '../model/message';
 })
 export class DataManagementService {
 
-  constructor(protected rest: RestService) { }
-
-  getFindId(id: number): Promise<any> {
-
-    return lastValueFrom(this.rest.getId(id))
-      .then((res: any) => {
-        console.log(res);
-        return res; // Puedes devolver el resultado si es necesario
-      })
-      .catch(error => {
-        console.error(error);
-        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
-      });
+  constructor(protected rest: RestService) {
+    this.getFindAll();
   }
 
 
-  public getFindAll(param?: any): Promise<Chat[]> {
-    return lastValueFrom(this.rest.getAll(param))
-      .then((res: any) => {
-        console.log(res);
-        return res; // Puedes devolver el resultado si es necesario
-      })
-      .catch(error => {
+  getFindId(id: number): Observable<any> {
+    return from(this.rest.getId(id)).pipe(
+      map((res: any) => res),
+      catchError(error => {
         console.error(error);
-        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
-      });
+        throw error;
+      })
+    );
   }
 
-  public updateChats(chat: Chat): Promise<Chat> {
-    return lastValueFrom(this.rest.update(chat))
-      .then((res: any) => {
-        console.log(res);
-        return res; // Puedes devolver el resultado si es necesario
-      })
-      .catch(error => {
+
+  public getFindAll(param?: any): Observable<Chat[]> {
+    return from(this.rest.getAll(param)).pipe(
+      map((res: any) => res as Chat[]),
+      catchError(error => {
         console.error(error);
-        throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
-      });
+        throw error;
+      })
+    );
+  }
+
+  public updateChats(chat: Chat): Observable<Chat> {
+    return from(this.rest.update(chat)).pipe(
+      map((res: any) => {
+        console.log('Respuesta de updateChats', res, chat);
+        return res;
+      }),
+      catchError(error => {
+        console.error('Error en updateChats', error);
+        throw error;
+      })
+    );
   }
 
 
@@ -54,6 +53,7 @@ export class DataManagementService {
   public getLastMessage(messages: Message[]): Message | null {
     if (messages && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
+      console.log('ultimo mensaje', lastMessage);
       return lastMessage;
     }
     return null;

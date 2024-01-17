@@ -13,7 +13,8 @@
     <ion-note slot="end" class="time">{{getLastMessage(chat.messages)?.date| date: 'HH:mm'}}</ion-note>
     <ion-label class="ion-text-wrap">
       <p class="name"> {{chat.contact.name}}</p>
-      <p class="msg">{{getLastMessage(chat.messages)?.content}}</p>
+      @if (chat.messages && chat.messages.length > 0 && getLastMessage(chat.messages)?.content){
+      <p class="msg">{{getLastMessage(chat.messages)?.content}}</p>}
     </ion-label>
   </ion-item>
   }
