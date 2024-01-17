@@ -34,7 +34,6 @@ export class ChatContactPage implements OnInit {
   }
 
 
-
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       if (this.chat) {
@@ -47,7 +46,7 @@ export class ChatContactPage implements OnInit {
 
         this.chat.messages.push(newMessage);
         this.newMessage = '';
-        this.chatContactDataManagement.updateChats(this.chat);
+        this.chatContactDataManagement.updateChats(this.chat).subscribe(updateChat => this.chat = updateChat);
 
         console.log('envia ', this.chat);
       }

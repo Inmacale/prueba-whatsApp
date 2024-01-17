@@ -21,7 +21,11 @@ export class ChatsPage implements OnInit {
   }
 
   getChats() {
-    this.chatsDataManagement.getFindAll().subscribe(chats => this.chats = chats);
+    this.chatsDataManagement.getFindAll().subscribe(chats => {
+      this.chats = chats;
+      console.log('estos chats', this.chats);
+    });
+
   }
 
 

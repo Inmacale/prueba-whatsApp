@@ -14,7 +14,7 @@ export class DataManagementService {
   }
 
 
-  getFindId(id: number): Observable<any> {
+  getFindId(id: number): Observable<Chat> {
     return from(this.rest.getId(id)).pipe(
       map((res: any) => res),
       catchError(error => {
@@ -25,8 +25,8 @@ export class DataManagementService {
   }
 
 
-  public getFindAll(param?: any): Observable<Chat[]> {
-    return from(this.rest.getAll(param)).pipe(
+  public getFindAll(): Observable<Chat[]> {
+    return (this.rest.getAll()).pipe(
       map((res: any) => res as Chat[]),
       catchError(error => {
         console.error(error);
@@ -36,7 +36,7 @@ export class DataManagementService {
   }
 
   public updateChats(chat: Chat): Observable<Chat> {
-    return from(this.rest.update(chat)).pipe(
+    return (this.rest.update(chat)).pipe(
       map((res: any) => {
         console.log('Respuesta de updateChats', res, chat);
         return res;
