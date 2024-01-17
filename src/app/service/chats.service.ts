@@ -17,19 +17,6 @@ export class ChatsService {
   }
 
 
-
-
-
-
-  public getLastMessage(messages: Message[]): Message | null {
-    if (messages && messages.length > 0) {
-      const lastMessage = messages[messages.length - 1];
-      return lastMessage;
-    }
-    return null;
-
-  }
-
   public getUnreadMessages(unreadMessages: Message[]): number {
     if (unreadMessages && unreadMessages.length > 0) {
       return unreadMessages.length;

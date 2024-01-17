@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RestService } from './rest.service';
 import { lastValueFrom } from 'rxjs';
 import { Chat } from '../model/chat';
+import { Message } from '../model/message';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,17 @@ export class DataManagementService {
         throw error; // Puedes manejar el error aquí o lanzarlo para que se maneje en el nivel superior
       });
   }
+
+
+
+  public getLastMessage(messages: Message[]): Message | null {
+    if (messages && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      return lastMessage;
+    }
+    return null;
+
+  }
+
 
 }

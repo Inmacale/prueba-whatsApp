@@ -22,14 +22,12 @@ export class ChatsPage implements OnInit {
 
   async getChats() {
     this.chats = await this.chatsDataManagement.getFindAll();
-
-
   }
 
 
 
   getLastMessage(messages: Message[]): Message | null {
-    return this.chatsService.getLastMessage(messages);
+    return this.chatsDataManagement.getLastMessage(messages);
   }
 
   getUnreadMessages(unreadMessages: Message[]): number {

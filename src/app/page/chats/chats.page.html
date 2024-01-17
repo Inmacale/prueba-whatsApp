@@ -7,8 +7,10 @@
     @if (getUnreadMessages(chat.unreadMessages) !== 0) {
     <ion-badge class="unread_message" slot="end">
       {{getUnreadMessages(chat.unreadMessages)}}</ion-badge>
-    <ion-note slot="end" class="time">{{getLastMessage(chat.messages)?.date| date: 'HH:mm'}}</ion-note>
+
     }
+
+    <ion-note slot="end" class="time">{{getLastMessage(chat.messages)?.date| date: 'HH:mm'}}</ion-note>
     <ion-label class="ion-text-wrap">
       <p class="name"> {{chat.contact.name}}</p>
       <p class="msg">{{getLastMessage(chat.messages)?.content}}</p>
