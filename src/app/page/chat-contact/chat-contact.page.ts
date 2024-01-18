@@ -24,10 +24,16 @@ export class ChatContactPage implements OnInit {
     this.getChatContact();
   }
 
-  async getChatContact() {
+  getChatContact() {
     if (this.profileId) {
-      this.chatContactDataManagement.getFindId(this.profileId).then (res =>
-        this.chat = res);
+      this.chatContactDataManagement.getFindId(this.profileId).subscribe({
+        next: (chat: Chat) => {
+          this.chat = chat;
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
 
     }
   }
@@ -44,7 +50,14 @@ export class ChatContactPage implements OnInit {
 
         this.chat.messages.push(newMessage);
         this.newMessage = '';
-        this.chatContactDataManagement.updateChats(this.chat);
+        this.chatContactDataManagement.update(this.chat).subscribe({
+          next: () => {
+            console.log('Mensaje enviado');
+          },
+          error: (error: any) => {
+            console.error(error);
+          }
+        });
 
         console.log('envia ', this.chat);
       }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 import { ChatsService } from 'src/app/service/chats.service';
@@ -14,17 +15,36 @@ export class ChatsPage implements OnInit {
   chats: Chat[] = [];
 
 
-  constructor(private chatsService: ChatsService, protected chatsDataManagement: DataManagementService) { }
-
-  ngOnInit() {
-    this.getChats();
+  constructor(
+    private chatsService: ChatsService,
+    protected chatsDataManagement: DataManagementService,
+    public navCtrl: NavController
+  ) {
   }
 
- async getChats() {
-   await this.chatsDataManagement.getFindAll().then(chats => {
-      this.chats = chats;
-    });
+  ngOnInit(): void {
+    console.log('chats', this.chats)
+  }
 
+  ionViewWillEnter() {
+    this.getChats();
+    console.log('chats', this.chats)
+  }
+
+  public gotoChatDetail(id: number): void {
+    this.navCtrl.navigateRoot('/chat-contact/' + id, { animated: true, animationDirection: 'forward' });
+  }
+
+
+  getChats() {
+    this.chatsDataManagement.getFindAll().subscribe({
+      next: (chats: Chat[]) => {
+        this.chats = chats;
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
   }
 
 
