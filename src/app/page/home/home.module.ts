@@ -18,6 +18,6 @@ import { CallsPage } from '../calls/calls.page';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, CommunityPage, ChatsPage, NewsPage, CallsPage]
+  declarations: [HomePage]
 })
 export class HomePageModule { }

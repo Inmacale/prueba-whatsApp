@@ -15,6 +15,6 @@ import { CommunityPage } from './community.page';
     IonicModule,
     CommunityPageRoutingModule
   ],
-  declarations: []
+  declarations: [CommunityPage]
 })
 export class CommunityPageModule { }
