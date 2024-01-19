@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, NavController } from '@ionic/angular';
+
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
-import { ChatsService } from 'src/app/service/chats.service';
+
 import { DataManagementService } from 'src/app/service/data-management.service';
 
 @Component({
@@ -13,10 +14,11 @@ import { DataManagementService } from 'src/app/service/data-management.service';
 export class ChatsPage implements OnInit {
 
   chats: Chat[] = [];
-
+  pageSize: number = 13; // Número de chats a cargar por página
+  currentPage: number = 1; // Página actual
 
   constructor(
-    private chatsService: ChatsService,
+
     protected chatsDataManagement: DataManagementService,
     public navCtrl: NavController
   ) {
@@ -39,7 +41,7 @@ export class ChatsPage implements OnInit {
   getChats() {
     this.chatsDataManagement.getFindAll().subscribe({
       next: (chats: Chat[]) => {
-        this.chats = chats;
+        this.chats.push(...chats);
       },
       error: (error: any) => {
         console.error(error);
@@ -48,13 +50,25 @@ export class ChatsPage implements OnInit {
   }
 
 
+
+
   getLastMessage(messages: Message[]): Message | null {
     return this.chatsDataManagement.getLastMessage(messages);
   }
 
   getUnreadMessages(unreadMessages: Message[]): number {
-    return this.chatsService.getUnreadMessages(unreadMessages);
+    return this.chatsDataManagement.getUnreadMessages(unreadMessages);
   }
+
+  onIonInfinite(ev: InfiniteScrollCustomEvent) {
+    this.currentPage++;
+    this.getChats();
+    setTimeout(() => {
+      ev.target.complete();
+    }, 500);
+  }
+
+
 
 
 

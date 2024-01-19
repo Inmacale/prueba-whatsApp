@@ -33,11 +33,6 @@ const routes: Routes = [
     ]
   },
 
-  {
-    path: 'home',
-    loadChildren: () => import('./page/home/home.module').then(m => m.HomePageModule)
-  },
-
 
   {
     path: 'chat-contact/:id',

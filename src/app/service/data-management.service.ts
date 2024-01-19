@@ -37,4 +37,13 @@ export class DataManagementService {
   }
 
 
+  public getUnreadMessages(unreadMessages: Message[]): number {
+    if (unreadMessages && unreadMessages.length > 0) {
+      return unreadMessages.length;
+    }
+    return 0;
+  }
+
+
+
 }

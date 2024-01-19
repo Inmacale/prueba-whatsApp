@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
-import { ChatsService } from 'src/app/service/chats.service';
+
 import { DataManagementService } from 'src/app/service/data-management.service';
 
 @Component({
@@ -15,9 +15,10 @@ export class ChatContactPage implements OnInit {
   chat: Chat | undefined;
   newMessage: string = '';
 
+
   profileId: number | undefined;
 
-  constructor(private route: ActivatedRoute, private chatsService: ChatsService, private chatContactDataManagement: DataManagementService) { }
+  constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) { }
 
   ngOnInit() {
     this.profileId = parseInt(this.route.snapshot.paramMap.get('id') || '', 10);
@@ -60,11 +61,33 @@ export class ChatContactPage implements OnInit {
         });
 
         console.log('envia ', this.chat);
+
+        const currentChat = this.chat;
+
+        setTimeout(() => {
+          if (currentChat) {
+            const autoReply = new Message(
+              currentChat.messages.length + 1,
+              'Respuesta automática después de 10 segundos',
+              'input',
+              new Date()
+            );
+
+            currentChat.messages.push(autoReply);
+            this.chatContactDataManagement.update(currentChat).subscribe({
+              next: () => {
+                console.log('Respuesta automática enviada');
+              },
+              error: (error: any) => {
+                console.error(error);
+              }
+            });
+          }
+        }, 10000);
       }
     }
-
-
   }
+
 
 
 }
