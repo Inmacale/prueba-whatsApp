@@ -1,17 +1,36 @@
-<ion-tabs>
-  <ion-tab-bar slot="top">
-    <ion-tab-button tab="community">
-      <ion-icon name="people-sharp"></ion-icon>
-    </ion-tab-button>
-    <ion-tab-button tab="chats">
-      Chats
-    </ion-tab-button>
-    <ion-tab-button tab="news">
-      Novedades
-    </ion-tab-button>
-    <ion-tab-button tab="calls">
-      Llamadas
-    </ion-tab-button>
-
-  </ion-tab-bar>
-</ion-tabs>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="success">
+    <ion-title>
+      WhatsApp
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="community">
+        <ion-icon name="people-sharp"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="chats">
+        Chats
+      </ion-tab-button>
+      <ion-tab-button tab="news">
+        Novedades
+      </ion-tab-button>
+      <ion-tab-button tab="calls">
+        Llamadas
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

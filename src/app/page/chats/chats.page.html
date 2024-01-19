@@ -15,7 +15,7 @@
       <ion-label class="ion-text-wrap">
         <p class="name"> {{chat.contact.name}}</p>
 
-        <p class="msg">{{getLastMessage(chat.messages)?.content}}</p>
+        <p *ngIf="chat.messages && chat.messages.length > 0" class="msg">{{getLastMessage(chat.messages)?.content}}</p>
       </ion-label>
     </ion-item>
 

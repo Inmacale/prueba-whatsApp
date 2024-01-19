@@ -15,6 +15,6 @@ import { TabPage } from './tab.page';
     IonicModule,
     TabPageRoutingModule
   ],
-  declarations: [TabPage]
+  declarations: []
 })
-export class TabPageModule {}
+export class TabPageModule { }

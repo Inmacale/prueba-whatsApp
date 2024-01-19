@@ -23,7 +23,7 @@ export class ChatsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('chats', this.chats)
+    console.log('chats ng', this.chats)
   }
 
   ionViewWillEnter() {

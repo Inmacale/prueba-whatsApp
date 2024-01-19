@@ -1,0 +1,14 @@
+ion-tab-bar {
+
+    --background: var(--ion-color-success);
+
+
+    ion-tab-button {
+
+        &.tab-selected {
+            border-bottom: 2px solid var(--ion-color-success-contrast);
+            color: #fff;
+
+        }
+    }
+}
