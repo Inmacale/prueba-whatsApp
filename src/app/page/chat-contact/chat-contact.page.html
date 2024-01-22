@@ -27,14 +27,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngFor="let mensaje of chat?.messages">
 
 
 
-    <ion-card-content>
-      {{ mensaje.content}}
-    </ion-card-content>
-  </ion-card>
+
+
+
+  <app-message *ngFor="let message of chat?.messages" [message]="message"></app-message>
+
 
 </ion-content>
 <ion-footer>
