@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IonContent } from '@ionic/angular';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 
@@ -12,11 +13,14 @@ import { DataManagementService } from 'src/app/service/data-management.service';
 })
 export class ChatContactPage implements OnInit {
 
+  @ViewChild(IonContent, { static: false }) ionContent!: IonContent;
+  @ViewChild('contentArea', { read: ElementRef }) contentAreaRef!: ElementRef;
+
+
   chat: Chat | undefined;
   newMessage: string = '';
-
-
   profileId: number | undefined;
+
 
   constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) { }
 
@@ -39,6 +43,12 @@ export class ChatContactPage implements OnInit {
     }
   }
 
+  scrollToBottom() {
+    if (this.ionContent) {
+      this.ionContent.scrollToBottom(100);
+    }
+  }
+
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       if (this.chat) {
@@ -54,6 +64,7 @@ export class ChatContactPage implements OnInit {
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
             console.log('Mensaje enviado');
+            this.scrollToBottom();
           },
           error: (error: any) => {
             console.error(error);
@@ -77,6 +88,7 @@ export class ChatContactPage implements OnInit {
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
                 console.log('Respuesta automática enviada');
+                this.scrollToBottom();
               },
               error: (error: any) => {
                 console.error(error);
@@ -86,6 +98,7 @@ export class ChatContactPage implements OnInit {
         }, 500);
       }
     }
+
   }
 
 
