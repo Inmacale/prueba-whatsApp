@@ -26,18 +26,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-
-
-
-
-
+<ion-content [fullscreen]="true" color="light">
 
   <app-message *ngFor="let message of chat?.messages" [message]="message"></app-message>
 
-
 </ion-content>
-<ion-footer>
+<ion-footer collapse="fade">
   <ion-toolbar color="undefined">
     <ion-item>
       <ion-textarea [(ngModel)]="newMessage" placeholder="Escriba un mensaje" (keyup.enter)="sendMessage()"

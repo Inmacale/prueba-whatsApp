@@ -7,10 +7,10 @@ import { Message } from 'src/app/model/message';
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  @Input() message: Message;
+  @Input() message: Message | undefined;
 
   constructor() {
-    this.message = { id: 0, content: '', type: 'output', date: new Date() };
+
 
   }
 

@@ -1,7 +1,7 @@
 export interface Message {
     id: number;
     content: string;
-    type: MessageType;
+    messageType: MessageType;
     date: Date;
 }
 
@@ -9,7 +9,7 @@ export class Message implements Message {
     constructor(id: number, content: string, type: MessageType, date: Date) {
         this.id = id;
         this.content = content;
-        this.type = type;
+        this.messageType = type;
         this.date = date;
     }
 }

@@ -1,3 +1,5 @@
-<p>
-  {{message.content}}
-</p>
+<div
+  [ngClass]="{'message-output': message?.messageType === 'output', 'message-input': message?.messageType === 'input'}">
+  <span>{{ message?.content}}</span>
+  <span class="hora">{{message?.date| date: 'HH:mm'}}</span>
+</div>

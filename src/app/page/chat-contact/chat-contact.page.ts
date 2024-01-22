@@ -83,7 +83,7 @@ export class ChatContactPage implements OnInit {
               }
             });
           }
-        }, 10000);
+        }, 500);
       }
     }
   }
