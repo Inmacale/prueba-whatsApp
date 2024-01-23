@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent, ScrollDetail } from '@ionic/angular';
-import { IonContentCustomEvent } from '@ionic/core';
+import { IonContent, } from '@ionic/angular';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 
@@ -29,6 +28,11 @@ export class ChatContactPage implements OnInit {
   ngOnInit() {
     this.profileId = parseInt(this.route.snapshot.paramMap.get('id') || '', 10);
     this.getChatContact();
+
+  }
+
+  ionViewDidEnter() {
+    this.scrollUp(0);
   }
 
   getChatContact() {
@@ -45,18 +49,9 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  scrollUp() {
+  scrollUp(duration: number) {
     if (this.ionContent) {
-
-      this.ionContent.getScrollElement().then((contentElement: HTMLElement | null) => {
-        if (contentElement) {
-
-          const newHeight = contentElement.scrollHeight;
-
-          // Hacer scroll al final del contenido con animación
-          this.ionContent.scrollToPoint(0, newHeight, 300);
-        }
-      });
+      this.ionContent.scrollToBottom(duration);
     }
   }
 
@@ -85,7 +80,7 @@ export class ChatContactPage implements OnInit {
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
             console.log('Mensaje enviado');
-            this.scrollUp();
+            this.scrollUp(300);
           },
           error: (error: any) => {
             console.error(error);
@@ -109,7 +104,7 @@ export class ChatContactPage implements OnInit {
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
                 console.log('Respuesta automática enviada');
-                this.scrollUp();
+                this.scrollUp(300);
               },
               error: (error: any) => {
                 console.error(error);
