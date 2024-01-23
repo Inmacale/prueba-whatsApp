@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { Chat } from 'src/app/model/chat';
@@ -13,8 +13,8 @@ import { DataManagementService } from 'src/app/service/data-management.service';
 })
 export class ChatContactPage implements OnInit {
 
-  @ViewChild(IonContent, { static: false }) ionContent!: IonContent;
-  @ViewChild('contentArea', { read: ElementRef }) contentAreaRef!: ElementRef;
+  @ViewChild('contentArea') ionContent!: IonContent;
+
 
 
   chat: Chat | undefined;
@@ -43,11 +43,21 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  scrollToBottom() {
+  scrollUp() {
     if (this.ionContent) {
-      this.ionContent.scrollToBottom(100);
+
+      this.ionContent.getScrollElement().then((contentElement: HTMLElement | null) => {
+        if (contentElement) {
+
+          const newHeight = contentElement.scrollHeight;
+
+          // Hacer scroll al final del contenido con animación
+          this.ionContent.scrollToPoint(0, newHeight, 150);
+        }
+      });
     }
   }
+
 
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
@@ -64,7 +74,7 @@ export class ChatContactPage implements OnInit {
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
             console.log('Mensaje enviado');
-            this.scrollToBottom();
+            this.scrollUp();
           },
           error: (error: any) => {
             console.error(error);
@@ -88,14 +98,14 @@ export class ChatContactPage implements OnInit {
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
                 console.log('Respuesta automática enviada');
-                this.scrollToBottom();
+                this.scrollUp();
               },
               error: (error: any) => {
                 console.error(error);
               }
             });
           }
-        }, 500);
+        }, 700);
       }
     }
 
