@@ -7,7 +7,7 @@ import { Message } from 'src/app/model/message';
   styleUrls: ['./message.component.scss'],
 })
 export class MessageComponent {
-  @Input() message: Message | undefined;
+  @Input() message!: Message;
 
   constructor() {
 

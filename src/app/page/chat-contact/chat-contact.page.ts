@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent, } from '@ionic/angular';
+import { IonContent, ScrollCustomEvent, } from '@ionic/angular';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 
@@ -23,7 +23,8 @@ export class ChatContactPage implements OnInit {
   showFabButton: boolean = false;
 
 
-  constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) { }
+  constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) {
+  }
 
   ngOnInit() {
     this.profileId = parseInt(this.route.snapshot.paramMap.get('id') || '', 10);
@@ -55,12 +56,13 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  onScroll(event: CustomEvent) {
-    const content = event.target as HTMLIonContentElement;
+  onScroll(event: ScrollCustomEvent) {
 
-    this.showFabButton = content.scrollTop > 0;
+    console.log('event.detail', event.detail);
+    console.log('event.detail', event.detail.deltaY, event.detail.startY);
+    this.showFabButton = event.detail.deltaY < 0;
 
-    console.log(this.showFabButton)
+
 
   }
 
