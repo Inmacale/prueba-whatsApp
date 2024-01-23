@@ -26,10 +26,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" color="light" #contentArea>
+<ion-content [fullscreen]="true" color="light" (ionScroll)="onScroll($event)" #contentArea>
 
   <app-message *ngFor="let message of chat?.messages" [message]="message"></app-message>
 
+  <ion-fab *ngIf="showFabButton" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="medium" size="small" (click)="scrollUp()">
+      <ion-icon name="chevron-down-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 <ion-footer collapse="fade">
   <ion-toolbar color="undefined">

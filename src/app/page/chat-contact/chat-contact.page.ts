@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, ScrollDetail } from '@ionic/angular';
+import { IonContentCustomEvent } from '@ionic/core';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 
@@ -20,6 +21,7 @@ export class ChatContactPage implements OnInit {
   chat: Chat | undefined;
   newMessage: string = '';
   profileId: number | undefined;
+  showFabButton: boolean = false;
 
 
   constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) { }
@@ -52,10 +54,19 @@ export class ChatContactPage implements OnInit {
           const newHeight = contentElement.scrollHeight;
 
           // Hacer scroll al final del contenido con animación
-          this.ionContent.scrollToPoint(0, newHeight, 150);
+          this.ionContent.scrollToPoint(0, newHeight, 300);
         }
       });
     }
+  }
+
+  onScroll(event: CustomEvent) {
+    const content = event.target as HTMLIonContentElement;
+
+    this.showFabButton = content.scrollTop > 0;
+
+    console.log(this.showFabButton)
+
   }
 
 
@@ -105,7 +116,7 @@ export class ChatContactPage implements OnInit {
               }
             });
           }
-        }, 700);
+        }, 900);
       }
     }
 
