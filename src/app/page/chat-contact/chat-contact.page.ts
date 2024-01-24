@@ -34,7 +34,7 @@ export class ChatContactPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.scrollUp(0);
+    this.scrollUp();
   }
 
   getChatContact() {
@@ -51,9 +51,9 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  scrollUp(duration: number) {
+  scrollUp() {
     if (this.ionContent) {
-      this.ionContent.scrollToBottom(duration);
+      this.ionContent.scrollToBottom();
     }
   }
 
@@ -62,15 +62,7 @@ export class ChatContactPage implements OnInit {
     console.log('event.detail.deltaY', event.detail.deltaY);
     const scrollTop = event.detail.scrollTop;
     const deltay = event.detail.deltaY;
-
-    if (scrollTop < this.lastScrollTop && deltay < 0) {
-      // Haciendo scroll hacia arriba
-      this.showFabButton = true;
-    } else {
-      // No está haciendo scroll hacia arriba
-      this.showFabButton = false;
-    }
-
+    this.showFabButton = scrollTop < this.lastScrollTop && deltay < 0;
     this.lastScrollTop = scrollTop;
   }
 
@@ -91,7 +83,7 @@ export class ChatContactPage implements OnInit {
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
 
-            this.scrollUp(300);
+            this.scrollUp();
           },
           error: (error: any) => {
             console.error(error);
@@ -114,15 +106,14 @@ export class ChatContactPage implements OnInit {
             currentChat.messages.push(autoReply);
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
-
-                this.scrollUp(300);
+                this.scrollUp();
               },
               error: (error: any) => {
                 console.error(error);
               }
             });
           }
-        }, 900);
+        }, 0);
       }
     }
 
