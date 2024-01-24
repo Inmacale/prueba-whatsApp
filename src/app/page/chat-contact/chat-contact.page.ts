@@ -21,6 +21,7 @@ export class ChatContactPage implements OnInit {
   newMessage: string = '';
   profileId: number | undefined;
   showFabButton: boolean = false;
+  lastScrollTop = 0;
 
 
   constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) {
@@ -57,14 +58,22 @@ export class ChatContactPage implements OnInit {
   }
 
   onScroll(event: ScrollCustomEvent) {
+    console.log('event.detail.scrollTop', event.detail.scrollTop);
+    console.log('event.detail.deltaY', event.detail.deltaY);
+    const scrollTop = event.detail.scrollTop;
+    const deltay = event.detail.deltaY;
 
-    console.log('event.detail', event.detail);
-    console.log('event.detail', event.detail.deltaY, event.detail.startY);
-    this.showFabButton = event.detail.deltaY < 0;
+    if (scrollTop < this.lastScrollTop && deltay < 0) {
+      // Haciendo scroll hacia arriba
+      this.showFabButton = true;
+    } else {
+      // No está haciendo scroll hacia arriba
+      this.showFabButton = false;
+    }
 
-
-
+    this.lastScrollTop = scrollTop;
   }
+
 
 
   public sendMessage(): void {
@@ -81,7 +90,7 @@ export class ChatContactPage implements OnInit {
         this.newMessage = '';
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
-            console.log('Mensaje enviado');
+
             this.scrollUp(300);
           },
           error: (error: any) => {
@@ -105,7 +114,7 @@ export class ChatContactPage implements OnInit {
             currentChat.messages.push(autoReply);
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
-                console.log('Respuesta automática enviada');
+
                 this.scrollUp(300);
               },
               error: (error: any) => {
