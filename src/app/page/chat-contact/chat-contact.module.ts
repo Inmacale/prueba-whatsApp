@@ -8,14 +8,16 @@ import { ChatContactPageRoutingModule } from './chat-contact-routing.module';
 
 import { ChatContactPage } from './chat-contact.page';
 import { MessageComponent } from 'src/app/component/message/message.component';
+import { MessageDirective } from 'src/app/directive/message.directive';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChatContactPageRoutingModule
+    ChatContactPageRoutingModule,
+
   ],
-  declarations: [ChatContactPage, MessageComponent]
+  declarations: [ChatContactPage, MessageComponent, MessageDirective]
 })
 export class ChatContactPageModule { }
