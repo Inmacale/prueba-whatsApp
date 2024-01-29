@@ -57,12 +57,19 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  onScroll(event: ScrollCustomEvent) {
+  async onScroll(event: ScrollCustomEvent) {
+    console.log('event.detail', event.detail);
     console.log('event.detail.scrollTop', event.detail.scrollTop);
     console.log('event.detail.deltaY', event.detail.deltaY);
+    const scrollElement = await this.ionContent.getScrollElement();
     const scrollTop = event.detail.scrollTop;
     const deltay = event.detail.deltaY;
-    this.showFabButton = scrollTop < this.lastScrollTop && deltay < 0;
+
+    const isAtBottom = scrollTop + scrollElement.clientHeight >= scrollElement.scrollHeight;
+
+
+    this.showFabButton = !isAtBottom || (scrollTop < this.lastScrollTop && deltay < 0);
+
     this.lastScrollTop = scrollTop;
   }
 

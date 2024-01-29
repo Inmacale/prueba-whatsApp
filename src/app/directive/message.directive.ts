@@ -6,7 +6,7 @@ import { MessageType } from '../model/message';
 })
 export class MessageDirective implements OnInit {
 
-  @Input() appMessageStyles: MessageType = 'input';
+  @Input() messageType: MessageType = 'input';
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
@@ -17,9 +17,9 @@ export class MessageDirective implements OnInit {
   private applyStyles() {
 
     this.renderer.addClass(this.el.nativeElement, 'slideUpAnimation');
-    if (this.appMessageStyles === 'output') {
+    if (this.messageType === 'output') {
       this.renderer.addClass(this.el.nativeElement, 'message-output');
-    } else if (this.appMessageStyles === 'input') {
+    } else if (this.messageType === 'input') {
       this.renderer.addClass(this.el.nativeElement, 'message-input');
     }
   }

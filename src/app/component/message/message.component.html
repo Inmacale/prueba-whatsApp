@@ -1,5 +1,5 @@
 @if (message) {
-<div [appMessageStyles]="message.messageType">
+<div appMessageStyles [messageType]="message.messageType">
   <span>{{ message.content}}</span>
   <span class="hora">{{message.date| date: 'HH:mm'}}</span>
 </div>
