@@ -16,13 +16,12 @@ export class ChatContactPage implements OnInit {
   @ViewChild('contentArea') ionContent!: IonContent;
 
 
-
   chat: Chat | undefined;
   newMessage: string = '';
   profileId: number | undefined;
   showFabButton: boolean = false;
   lastScrollTop = 0;
-
+  isSendingMessage: boolean = false;
 
   constructor(private route: ActivatedRoute, private chatContactDataManagement: DataManagementService) {
   }
@@ -58,18 +57,12 @@ export class ChatContactPage implements OnInit {
   }
 
   async onScroll(event: ScrollCustomEvent) {
-    console.log('event.detail', event.detail);
-    console.log('event.detail.scrollTop', event.detail.scrollTop);
-    console.log('event.detail.deltaY', event.detail.deltaY);
+
     const scrollElement = await this.ionContent.getScrollElement();
     const scrollTop = event.detail.scrollTop;
     const deltay = event.detail.deltaY;
-
     const isAtBottom = scrollTop + scrollElement.clientHeight >= scrollElement.scrollHeight;
-
-
-    this.showFabButton = !isAtBottom || (scrollTop < this.lastScrollTop && deltay < 0);
-
+    this.showFabButton = !this.isSendingMessage && (!isAtBottom || (scrollTop < this.lastScrollTop && deltay < 0));
     this.lastScrollTop = scrollTop;
   }
 
@@ -78,6 +71,7 @@ export class ChatContactPage implements OnInit {
   public sendMessage(): void {
     if (this.newMessage.trim() !== '') {
       if (this.chat) {
+        this.isSendingMessage = true;
         const newMessage = new Message(
           this.chat.messages.length + 1,
           this.newMessage,
@@ -97,8 +91,6 @@ export class ChatContactPage implements OnInit {
           }
         });
 
-        console.log('envia ', this.chat);
-
         const currentChat = this.chat;
 
         setTimeout(() => {
@@ -113,6 +105,7 @@ export class ChatContactPage implements OnInit {
             currentChat.messages.push(autoReply);
             this.chatContactDataManagement.update(currentChat).subscribe({
               next: () => {
+                this.isSendingMessage = false;
                 this.scrollUp();
               },
               error: (error: any) => {
