@@ -36,7 +36,7 @@ export class ChatContactPage implements OnInit {
     this.scrollUp();
   }
 
-  getChatContact() {
+  public getChatContact() {
     if (this.profileId) {
       this.chatContactDataManagement.getFindId(this.profileId).subscribe({
         next: (chat: Chat) => {
@@ -50,7 +50,7 @@ export class ChatContactPage implements OnInit {
     }
   }
 
-  scrollUp() {
+  public scrollUp() {
     if (this.ionContent) {
       this.ionContent.scrollToBottom();
     }
@@ -78,12 +78,10 @@ export class ChatContactPage implements OnInit {
           'output',
           new Date()
         );
-
         this.chat.messages.push(newMessage);
         this.newMessage = '';
         this.chatContactDataManagement.update(this.chat).subscribe({
           next: () => {
-
             this.scrollUp();
           },
           error: (error: any) => {
@@ -92,33 +90,27 @@ export class ChatContactPage implements OnInit {
         });
 
         const currentChat = this.chat;
+        if (currentChat) {
+          const autoReply = new Message(
+            currentChat.messages.length + 1,
+            'Respuesta automática después de 10 segundos',
+            'input',
+            new Date()
+          );
 
-        setTimeout(() => {
-          if (currentChat) {
-            const autoReply = new Message(
-              currentChat.messages.length + 1,
-              'Respuesta automática después de 10 segundos',
-              'input',
-              new Date()
-            );
-
-            currentChat.messages.push(autoReply);
-            this.chatContactDataManagement.update(currentChat).subscribe({
-              next: () => {
-                this.isSendingMessage = false;
-                this.scrollUp();
-              },
-              error: (error: any) => {
-                console.error(error);
-              }
-            });
-          }
-        }, 0);
+          currentChat.messages.push(autoReply);
+          this.chatContactDataManagement.update(currentChat).subscribe({
+            next: () => {
+              this.isSendingMessage = false;
+              this.scrollUp();
+            },
+            error: (error: any) => {
+              console.error(error);
+            }
+          });
+        }
       }
     }
 
   }
-
-
-
 }

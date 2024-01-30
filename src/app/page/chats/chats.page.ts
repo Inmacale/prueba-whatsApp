@@ -11,11 +11,11 @@ import { DataManagementService } from 'src/app/service/data-management.service';
   templateUrl: './chats.page.html',
   styleUrls: ['./chats.page.scss'],
 })
-export class ChatsPage implements OnInit {
+export class ChatsPage {
 
   chats: Chat[] = [];
-  pageSize: number = 13; // Número de chats a cargar por página
-  currentPage: number = 1; // Página actual
+  pageSize: number = 13;
+  currentPage: number = 1;
 
   constructor(
 
@@ -24,13 +24,10 @@ export class ChatsPage implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    console.log('chats ng', this.chats)
-  }
 
   ionViewWillEnter() {
     this.getChats();
-    console.log('chats', this.chats)
+
   }
 
   public gotoChatDetail(id: number): void {
@@ -38,7 +35,7 @@ export class ChatsPage implements OnInit {
   }
 
 
-  getChats() {
+  public getChats() {
     this.chatsDataManagement.getFindAll().subscribe({
       next: (chats: Chat[]) => {
         this.chats.push(...chats);
@@ -49,18 +46,15 @@ export class ChatsPage implements OnInit {
     });
   }
 
-
-
-
-  getLastMessage(messages: Message[]): Message | null {
+  public getLastMessage(messages: Message[]): Message | null {
     return this.chatsDataManagement.getLastMessage(messages);
   }
 
-  getUnreadMessages(unreadMessages: Message[]): number {
+  public getUnreadMessages(unreadMessages: Message[]): number {
     return this.chatsDataManagement.getUnreadMessages(unreadMessages);
   }
 
-  onIonInfinite(ev: InfiniteScrollCustomEvent) {
+  public onIonInfinite(ev: InfiniteScrollCustomEvent) {
     this.currentPage++;
     this.getChats();
     setTimeout(() => {
